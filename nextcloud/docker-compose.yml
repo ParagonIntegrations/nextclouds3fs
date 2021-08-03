@@ -1,0 +1,28 @@
+version: '3'
+services:
+  s3fs:
+    container_name: s3fs
+    build:
+      context: .
+      args:
+        S3FS_VERSION: ${S3FS_VERSION}
+        ALPINE_VERSION: ${ALPINE_VERSION}
+        UID: ${UID}
+        GID: ${GID}
+#    image: efrecon/s3fs:${S3FS_VERSION}
+    image: nelisvolschenk/s3fs:${S3FS_VERSION}
+    restart: unless-stopped
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - ../datadir/nextcloud/bucket:/opt/s3fs/bucket:rshared
+    environment:
+      AWS_S3_MOUNT: /opt/s3fs/bucket
+      S3FS_ARGS: ''
+      S3FS_DEBUG: 0
+      UID: ${UID}
+      GID: ${GID}
