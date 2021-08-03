@@ -1,5 +1,5 @@
 ENV NEXTCLOUD_VERSION=21.0.3
-FROM nextcloud:${NEXTCLOUD_VERSION}-apache
+FROM nextcloud:21.0.3-apache
 
 # Specify URL and secrets. When using AWS_S3_SECRET_ACCESS_KEY_FILE, the secret
 # key will be read from that file itself, which helps passing further passwords
