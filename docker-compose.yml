@@ -34,8 +34,8 @@ services:
       - ./datadir/nextcloud/main:/var/www/html:rshared
       - ./datadir/nextcloud/bucket:/opt/s3fs/bucket:rshared
     environment:
-      MYSQL_HOST: db
-      REDIS_HOST: redis
+#      MYSQL_HOST: db
+#      REDIS_HOST: redis
       AWS_S3_MOUNT: /opt/s3fs/bucket
       S3FS_ARGS: ''
       S3FS_DEBUG: 0
@@ -46,9 +46,9 @@ services:
       - storage.env
       - web.env
 #      - nextcloud.env
-    depends_on:
-      - db
-      - redis
+#    depends_on:
+#      - db
+#      - redis
 
 #  proxy:
 #    container_name: proxy
