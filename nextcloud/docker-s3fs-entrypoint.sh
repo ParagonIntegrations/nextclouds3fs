@@ -96,10 +96,10 @@ if [ -n "${mounted}" ]; then
         APPDATA_MOUNTPOINT="${AWS_S3_MOUNT}/data/${APPDATA_FOLDER}"
         echo "Trying to mount appdata"
         echo "mounting from ${APPDATA_LOCAL} to ${APPDATA_MOUNTPOINT}"
-        ls ${APPDATA_MOUNTPOINT}
+#        ls ${APPDATA_MOUNTPOINT}
         mount --bind ${APPDATA_LOCAL} ${APPDATA_MOUNTPOINT}
         # Check if mounting succeeded
-        cat /etc/mtab
+#        cat /etc/mtab
         appdata_mounted=$(cat /etc/mtab | grep "${APPDATA_MOUNTPOINT}")
         if [ -z "${appdata_mounted}" ]; then
             echo "Appdata mount failure exiting in 5 seconds."
