@@ -93,12 +93,20 @@ mounted=$(cat /etc/mtab | grep fuse.s3fs | grep "${AWS_S3_MOUNT}")
 if [ -n "${mounted}" ]; then
     echo "Mounted bucket ${AWS_S3_BUCKET} onto ${AWS_S3_MOUNT}"
     if [ -n "${APPDATA_FOLDER}" ]; then
+        echo "Trying to mount appdata"
         mount --bind ${APPDATA_LOCAL} ${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}
+        # Check if mounting succeeded
+        appdata_mounted=$(cat /etc/mtab | grep "${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}")
+        if [ -z "${appdata_mounted}" ]; then
+            echo "Appdata mount failure exiting in 5 seconds."
+            sleep 5
+            exit 1
+        fi
     fi
 #    exec "$@"
     exec /entrypoint.sh "apache2-foreground"
 else
-    echo "Mount failure exiting in 5 seconds."
+    echo "S3 Mount failure exiting in 5 seconds."
     sleep 5
     exit 1
 fi
