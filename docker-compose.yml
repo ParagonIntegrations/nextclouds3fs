@@ -1,20 +1,20 @@
 version: '3'
 
 services:
-#  db:
-#    container_name: mariadb
-#    image: mariadb:${MARIADB_VERSION}
-#    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-#    restart: unless-stopped
-#    volumes:
-#      - ./datadir/mariadb:/var/lib/mysql
-#    env_file:
-#      - db.env
-#
-#  redis:
-#    container_name: redis
-#    image: redis:${REDIS_VERSION}
-#    restart: always
+  db:
+    container_name: mariadb
+    image: mariadb:${MARIADB_VERSION}
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: unless-stopped
+    volumes:
+      - ./datadir/mariadb:/var/lib/mysql
+    env_file:
+      - db.env
+
+  redis:
+    container_name: redis
+    image: redis:${REDIS_VERSION}
+    restart: always
 
   app:
     container_name: nextcloud
@@ -33,11 +33,11 @@ services:
     volumes:
       - ./datadir/nextcloud/main:/var/www/html:rshared
       - ./datadir/nextcloud/bucket:/opt/s3fs/bucket:rshared
-    ports:
-    - 80:80
+#    ports:
+#    - 80:80
     environment:
-#      MYSQL_HOST: db
-#      REDIS_HOST: redis
+      MYSQL_HOST: db
+      REDIS_HOST: redis
       AWS_S3_MOUNT: /opt/s3fs/bucket
       S3FS_ARGS: ''
       S3FS_DEBUG: 0
@@ -48,43 +48,43 @@ services:
       - storage.env
       - web.env
       - nextcloud.env
-#    depends_on:
-#      - db
-#      - redis
+    depends_on:
+      - db
+      - redis
     networks:
       - proxy-tier
       - default
 
-#  proxy:
-#    container_name: proxy
-#    build: ./proxy
-#    restart: unless-stopped
-#    ports:
-#      - 80:80
-#      - 443:443
-#    labels:
-#      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
-#    volumes:
-#      - ./datadir/proxy/certs:/etc/nginx/certs:ro
-#      - ./datadir/proxy/vhost.d:/etc/nginx/vhost.d
-#      - ./datadir/proxy/html:/usr/share/nginx/html
-#      - /var/run/docker.sock:/tmp/docker.sock:ro
-#    networks:
-#      - proxy-tier
+  proxy:
+    container_name: proxy
+    build: ./proxy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    volumes:
+      - ./datadir/proxy/certs:/etc/nginx/certs:ro
+      - ./datadir/proxy/vhost.d:/etc/nginx/vhost.d
+      - ./datadir/proxy/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - proxy-tier
 
-#  letsencrypt-companion:
-#    container_name: letsencryptcompanion
-#    image: jrcs/letsencrypt-nginx-proxy-companion
-#    restart: unless-stopped
-#    volumes:
-#      - ./datadir/proxy/certs:/etc/nginx/certs
-#      - ./datadir/proxy/vhost.d:/etc/nginx/vhost.d
-#      - ./datadir/proxy/html:/usr/share/nginx/html
-#      - /var/run/docker.sock:/var/run/docker.sock:ro
-#    networks:
-#      - proxy-tier
-#    depends_on:
-#      - proxy
+  letsencrypt-companion:
+    container_name: letsencryptcompanion
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: unless-stopped
+    volumes:
+      - ./datadir/proxy/certs:/etc/nginx/certs
+      - ./datadir/proxy/vhost.d:/etc/nginx/vhost.d
+      - ./datadir/proxy/html:/usr/share/nginx/html
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy-tier
+    depends_on:
+      - proxy
 
 # self signed
 #  omgwtfssl:
