@@ -47,7 +47,7 @@ services:
       - storage.env
       - web.env
       - nextcloud.env
-    depends_on:
+#    depends_on:
 #      - db
 #      - redis
     networks:
