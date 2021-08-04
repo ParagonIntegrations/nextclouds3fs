@@ -33,6 +33,8 @@ services:
     volumes:
       - ./datadir/nextcloud/main:/var/www/html:rshared
       - ./datadir/nextcloud/bucket:/opt/s3fs/bucket:rshared
+    ports:
+    - 80:80
     environment:
 #      MYSQL_HOST: db
 #      REDIS_HOST: redis
