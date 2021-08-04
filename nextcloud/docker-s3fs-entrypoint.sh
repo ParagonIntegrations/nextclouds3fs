@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cat /etc/mtab
+cat /etc/passwd
 # Where are we going to mount the remote bucket resource in our container.
 DEST=${AWS_S3_MOUNT:-/opt/s3fs/bucket}
 
