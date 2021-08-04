@@ -60,7 +60,7 @@ if [ $UID -gt 0 ]; then
     chown $UID:$GID /opt/nextcloud
 fi
 
-echo "User $RUN_AS with id $UID and group $GROUP_NAME with gid $GID"
+# echo "User $RUN_AS with id $UID and group $GROUP_NAME with gid $GID"
 
 # Debug options
 DEBUG_OPTS=
