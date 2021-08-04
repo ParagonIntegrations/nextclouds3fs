@@ -19,7 +19,7 @@ ENV GID=0
 
 # Location of directory where to mount the drive into the container and where to mount the appdata
 ENV AWS_S3_MOUNT=/opt/s3fs/bucket
-APPDATA_LOCAL=/opt/nextcloud/appdata
+ENV APPDATA_LOCAL=/opt/nextcloud/appdata
 ENV APPDATA_FOLDER=
 
 # s3fs tuning
