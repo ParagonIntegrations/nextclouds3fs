@@ -87,7 +87,7 @@ mounted=$(cat /etc/mtab | grep fuse.s3fs | grep "${AWS_S3_MOUNT}")
 if [ -n "${mounted}" ]; then
     echo "Mounted bucket ${AWS_S3_BUCKET} onto ${AWS_S3_MOUNT}"
 #    exec "$@"
-    exec "/entrypoint.sh apache2-foreground"
+    exec /entrypoint.sh "apache2-foreground"
 else
     echo "Mount failure exiting in 5 seconds."
     sleep 5
