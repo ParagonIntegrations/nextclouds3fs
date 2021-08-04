@@ -1,4 +1,4 @@
-#! /usr/bin/env sh
+#!/usr/bin/env bash
 
 PERIOD=${1:-10}
 DEST=${AWS_S3_MOUNT:-/opt/s3fs/bucket}
@@ -26,7 +26,7 @@ if [ $UID -gt 0 ]; then
 fi
 
 while true; do
-    su - $RUN_AS -c "ls $DEST" > /dev/null
+    su -s /bin/bash $RUN_AS -c "ls $DEST" > /dev/null
     sleep $PERIOD &
     wait $!
 done
