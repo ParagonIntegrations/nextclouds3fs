@@ -19,7 +19,7 @@ ENV GID=0
 
 # Location of directory where to mount the drive into the container and where to mount the appdata
 ENV AWS_S3_MOUNT=/opt/s3fs/bucket
-ENV APPDATA_FOLDER
+ENV APPDATA_FOLDER=
 
 # Following should match the AWS_S3_MOUNT and APPDATA_FOLDER environment variables respectively.
 VOLUME [ "/opt/s3fs/bucket" ]
