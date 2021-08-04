@@ -41,7 +41,7 @@ COPY *.sh /usr/local/bin/
 
 # Following should match the AWS_S3_MOUNT and APPDATA_LOCAL environment variables respectively.
 VOLUME [ "/opt/s3fs/bucket" ]
-VOLUME [ "/opt/nextcloud/appdata" ]
+VOLUME [ "/opt/nextcloud" ]
 
 # The default is to perform all system-level mounting as part of the entrypoint
 # to then have a command that will keep listing the files under the main share.

@@ -5,6 +5,8 @@ DEST=${AWS_S3_MOUNT:-/opt/s3fs/bucket}
 
 exit_script() {
     SIGNAL=$1
+    echo "Caught $SIGNAL! Unmounting APPDATA..."
+    umount ${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}
     echo "Caught $SIGNAL! Unmounting ${DEST}..."
     fusermount -uz ${DEST}
     s3fs=$(ps -o pid= -o comm= | grep s3fs | sed -E 's/\s*(\d+)\s+.*/\1/g')
