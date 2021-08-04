@@ -33,6 +33,7 @@ services:
     volumes:
       - ./datadir/nextcloud/main:/var/www/html:rshared
       - ./datadir/nextcloud/bucket:/opt/s3fs/bucket:rshared
+      - ./datadir/nextcloud/ssddata:/opt/nextcloud:rshared
 #    ports:
 #    - 80:80
     environment:
