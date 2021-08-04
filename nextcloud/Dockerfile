@@ -50,6 +50,8 @@ VOLUME [ "/opt/s3fs/bucket" ]
 #CMD [ "empty.sh" ]
 
 STOPSIGNAL SIGTERM
+ENV NEXTCLOUD_UPDATE=1
+
 ENTRYPOINT [ "docker-s3fs-entrypoint.sh" ]
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
