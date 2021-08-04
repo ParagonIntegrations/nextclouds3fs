@@ -1,8 +1,7 @@
 #!/bin/bash
 
 
-NEXTCLOUD_DATADIR=/opt/s3fs/bucket/data
-#NEXTCLOUD_DATADIR=datadir/nextcloud/ssddata/appdata
+NEXTCLOUD_DATADIR=datadir/nextcloud/bucket/data
 
 docker-compose up -d
 
