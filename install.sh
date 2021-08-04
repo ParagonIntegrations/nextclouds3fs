@@ -9,8 +9,12 @@ docker-compose up -d
 read -p "Please wait while the nextcloud instance installs and then press enter"
 
 while [ -z "$APPDATADIR" ]; do
-    read -p "Please go to the nextcloud web page and create an admin account,
-    after the initialization is done come back and press enter"
+    read -p "Please go to the nextcloud web page and create an admin account, after the initialization is done come\
+     back and press enter. If you get a message about untrusted domains type y." UNTRUSTED
+    if [ "$UNTRUSTED" == "y" ]; then
+        read -p "Please enter your domain name like: test.example.com" DOMAIN
+        docker exec --user www-data nextcloud php occ config:system:set trusted_domains 2 --value="$DOMAIN"
+    fi
     APPDATADIR=$(sudo ls $NEXTCLOUD_DATADIR | grep '^appdata_')
 done
 echo "Appdata directory $APPDATADIR found, continuing."
