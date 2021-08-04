@@ -39,13 +39,15 @@ if [ ! -d $DEST ]; then
 fi
 
 # Add a group
+id -g $GID
 if [ $GID -gt 0 ]; then
     id -g $GID >/dev/null 2>&1 || groupadd --gid $GID  $GID
 fi
 
 # Add a user
+id -u $UID
 if [ $UID -gt 0 ]; then
-    id -u $UID >/dev/null 2>&1 || useradd --gid $GID $UID
+    id -u $UID >/dev/null 2>&1 || useradd --uid $UID --gid $GID $UID
     RUN_AS=$UID
     chown $UID:$GID $AWS_S3_MOUNT
     chown $UID:$GID ${AWS_S3_AUTHFILE}
