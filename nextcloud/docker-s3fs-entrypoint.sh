@@ -93,12 +93,14 @@ mounted=$(cat /etc/mtab | grep fuse.s3fs | grep "${AWS_S3_MOUNT}")
 if [ -n "${mounted}" ]; then
     echo "Mounted bucket ${AWS_S3_BUCKET} onto ${AWS_S3_MOUNT}"
     if [ -n "${APPDATA_FOLDER}" ]; then
+        APPDATA_MOUNTPOINT="${AWS_S3_MOUNT}/data/${APPDATA_FOLDER}"
         echo "Trying to mount appdata"
-        echo "mounting from ${APPDATA_LOCAL} to ${AWS_S3_MOUNT}/data/${APPDATA_FOLDER}"
-        ls ${AWS_S3_MOUNT}/data/${APPDATA_FOLDER}
-        mount --bind ${APPDATA_LOCAL} ${AWS_S3_MOUNT}/data/${APPDATA_FOLDER}
+        echo "mounting from ${APPDATA_LOCAL} to ${APPDATA_MOUNTPOINT}"
+        ls ${APPDATA_MOUNTPOINT}
+        mount --bind ${APPDATA_LOCAL} ${APPDATA_MOUNTPOINT}
         # Check if mounting succeeded
-        appdata_mounted=$(cat /etc/mtab | grep "${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}")
+        cat /etc/mtab
+        appdata_mounted=$(cat /etc/mtab | grep "${APPDATA_MOUNTPOINT}")
         if [ -z "${appdata_mounted}" ]; then
             echo "Appdata mount failure exiting in 5 seconds."
             sleep 5
