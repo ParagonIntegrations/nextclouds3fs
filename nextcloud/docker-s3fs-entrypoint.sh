@@ -54,6 +54,8 @@ if [ $UID -gt 0 ]; then
     chown $UID:$GID /opt/s3fs
 fi
 
+echo "User $RUN_AS with id $UID and group $GROUP_NAME with gid $GID"
+
 # Debug options
 DEBUG_OPTS=
 if [ $S3FS_DEBUG = "1" ]; then
@@ -76,7 +78,7 @@ s3fs $DEBUG_OPTS ${S3FS_ARGS} \
     ${AWS_S3_BUCKET} ${AWS_S3_MOUNT}
 
 # Ensure the correct user owns the mount
-chown -R ${AWS_S3_MOUNT}
+chown -R ${AWS_S3_MOUNT} $RUN_AS:$GROUP_NAME
 
 # s3fs can claim to have a mount even though it didn't succeed.
 # Doing an operation actually forces it to detect that and remove the mount.
