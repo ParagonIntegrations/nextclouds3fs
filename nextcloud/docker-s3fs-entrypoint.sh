@@ -75,6 +75,7 @@ su -s /bin/bash $RUN_AS -c "s3fs $DEBUG_OPTS ${S3FS_ARGS} \
     -o url=${AWS_S3_URL} \
     -o uid=$UID \
     -o gid=$GID \
+    -o allow_other \
     ${AWS_S3_BUCKET} ${AWS_S3_MOUNT}"
 
 # s3fs can claim to have a mount even though it didn't succeed.
