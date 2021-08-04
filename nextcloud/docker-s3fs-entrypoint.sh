@@ -81,13 +81,13 @@ su -s /bin/bash $RUN_AS -c "s3fs $DEBUG_OPTS ${S3FS_ARGS} \
 # s3fs can claim to have a mount even though it didn't succeed.
 # Doing an operation actually forces it to detect that and remove the mount.
 su -s /bin/bash $RUN_AS -c "ls ${AWS_S3_MOUNT}"
-cat /etc/mtab
 
 mounted=$(cat /etc/mtab | grep fuse.s3fs | grep "${AWS_S3_MOUNT}")
 
 if [ -n "${mounted}" ]; then
     echo "Mounted bucket ${AWS_S3_BUCKET} onto ${AWS_S3_MOUNT}"
-    exec "$@"
+#    exec "$@"
+    exec "/entrypoint.sh"
 else
     echo "Mount failure exiting in 5 seconds."
     sleep 5
