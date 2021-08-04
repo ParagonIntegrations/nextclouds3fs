@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-cat /etc/passwd
 # Where are we going to mount the remote bucket resource in our container.
 DEST=${AWS_S3_MOUNT:-/opt/s3fs/bucket}
-APPDATA_LOCAL=/opt/nextcloud/appdata
 
 # Check variables and defaults
 if [ -z "${AWS_S3_ACCESS_KEY_ID}" -a -z "${AWS_S3_SECRET_ACCESS_KEY}" -a -z "${AWS_S3_SECRET_ACCESS_KEY_FILE}" -a -z "${AWS_S3_AUTHFILE}" ]; then
@@ -41,8 +39,8 @@ if [ ! -d $DEST ]; then
 fi
 
 # Create appdata folder if it doesn't exist
-if [ ! -d $APPDATA_LOCAL ]; then
-    mkdir -p $APPDATA_LOCAL
+if [ ! -d ${APPDATA_LOCAL} ]; then
+    mkdir -p ${APPDATA_LOCAL}
 fi
 
 # Add a group
@@ -58,6 +56,8 @@ if [ $UID -gt 0 ]; then
     chown $UID:$GID $AWS_S3_MOUNT
     chown $UID:$GID ${AWS_S3_AUTHFILE}
     chown $UID:$GID /opt/s3fs
+    chown $UID:$GID ${APPDATA_LOCAL}
+    chown $UID:$GID /opt/nextcloud
 fi
 
 echo "User $RUN_AS with id $UID and group $GROUP_NAME with gid $GID"
@@ -93,7 +93,7 @@ mounted=$(cat /etc/mtab | grep fuse.s3fs | grep "${AWS_S3_MOUNT}")
 if [ -n "${mounted}" ]; then
     echo "Mounted bucket ${AWS_S3_BUCKET} onto ${AWS_S3_MOUNT}"
     if [ -n "${APPDATA_FOLDER}" ]; then
-        mount --bind $APPDATA_LOCAL ${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}
+        mount --bind ${APPDATA_LOCAL} ${AWS_S3_BUCKET}/data/${APPDATA_FOLDER}
     fi
 #    exec "$@"
     exec /entrypoint.sh "apache2-foreground"

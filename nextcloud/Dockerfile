@@ -19,11 +19,8 @@ ENV GID=0
 
 # Location of directory where to mount the drive into the container and where to mount the appdata
 ENV AWS_S3_MOUNT=/opt/s3fs/bucket
+APPDATA_LOCAL=/opt/nextcloud/appdata
 ENV APPDATA_FOLDER=
-
-# Following should match the AWS_S3_MOUNT and APPDATA_FOLDER environment variables respectively.
-VOLUME [ "/opt/s3fs/bucket" ]
-VOLUME [ "/opt/nextcloud/appdata" ]
 
 # s3fs tuning
 ENV S3FS_DEBUG=0
@@ -41,6 +38,10 @@ RUN mkdir /opt/s3fs && \
 RUN echo user_allow_other >> /etc/fuse.conf
 
 COPY *.sh /usr/local/bin/
+
+# Following should match the AWS_S3_MOUNT and APPDATA_LOCAL environment variables respectively.
+VOLUME [ "/opt/s3fs/bucket" ]
+VOLUME [ "/opt/nextcloud/appdata" ]
 
 # The default is to perform all system-level mounting as part of the entrypoint
 # to then have a command that will keep listing the files under the main share.
