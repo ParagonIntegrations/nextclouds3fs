@@ -24,7 +24,7 @@ echo "Copying Appdata files from s3 bucket to internal disk"
 sleep 1
 sudo cp -a $NEXTCLOUD_DATADIR/$APPDATADIR/. datadir/nextcloud/ssddata/appdata
 echo "Copy done: removing files from s3 bucket"
-sudo rm -R $NEXTCLOUD_DATADIR/$APPDATADIR/*
+sudo rm -r $NEXTCLOUD_DATADIR/$APPDATADIR/*
 echo "Removing done: replacing APPDATA_FOLDER environment variable in nextcloud.env"
 sleep 1
 sed -i "s/^APPDATA_FOLDER=.*/APPDATA_FOLDER=$APPDATADIR/g" nextcloud.env
