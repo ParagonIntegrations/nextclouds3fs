@@ -24,11 +24,14 @@ echo "Copying Appdata files from s3 bucket to internal disk"
 sleep 1
 sudo cp --verbose -a $NEXTCLOUD_DATADIR/$APPDATADIR/. datadir/nextcloud/ssddata/appdata
 echo "Copy done: removing files from s3 bucket."
-sudo rm --verbose -r $NEXTCLOUD_DATADIR/$APPDATADIR/*
+sudo rm --verbose -r $pwd/$NEXTCLOUD_DATADIR/$APPDATADIR
+echo "Recreating directory"
+sudo mkdir $NEXTCLOUD_DATADIR/$APPDATADIR
 echo "Removing done: replacing APPDATA_FOLDER environment variable in nextcloud.env"
 sleep 1
 sed -i "s/^APPDATA_FOLDER=.*/APPDATA_FOLDER=$APPDATADIR/g" nextcloud.env
-read -p "Done replacing, press enter to restart the docker environment with the new values"
+read -p "Done replacing, press enter to stop the docker environment"
 docker-compose down
+read -p "Stopped: press enter to start the docker environment with the new values"
 docker-compose up -d
 read -p "Configuration is done, press enter to exit this script"
