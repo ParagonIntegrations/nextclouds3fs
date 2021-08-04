@@ -22,7 +22,9 @@ trap "exit_script SIGTERM" SIGTERM
 trap "exit_script SIGQUIT" SIGQUIT
 
 if [ $UID -gt 0 ]; then
-    RUN_AS=$UID
+    RUN_AS=$(getent passwd $UID | cut -d : -f 1)
+else
+    RUN_AS=root
 fi
 
 while true; do
