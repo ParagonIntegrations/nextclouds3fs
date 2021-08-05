@@ -18,10 +18,10 @@ services:
 
   app:
     container_name: nextcloud
-    build:
-      context: ./nextcloud
-      args:
-        NEXTCLOUD_VERSION: ${NEXTCLOUD_VERSION}
+#    build:
+#      context: ./nextcloud
+#      args:
+#        NEXTCLOUD_VERSION: ${NEXTCLOUD_VERSION}
     image: nelisvolschenk/nextcloud:${NEXTCLOUD_VERSION}-s3fs${S3FS_VERSION}
     restart: unless-stopped
     cap_add:
