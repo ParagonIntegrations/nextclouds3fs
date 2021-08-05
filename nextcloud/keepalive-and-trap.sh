@@ -30,7 +30,10 @@ else
 fi
 
 while true; do
-    su -s /bin/bash $RUN_AS -c "ls $DEST" > /dev/null
+    CONTENTS=$(su -s /bin/bash $RUN_AS -c "ls $DEST")
+    if [ -z "$CONTENTS" ]; then
+        exit_script SIGINT
+    fi
     sleep $PERIOD &
     wait $!
 done
