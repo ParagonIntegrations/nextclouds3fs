@@ -1,5 +1,3 @@
 {
-  "cgroup-parent": "/docker_limit.slice",
-  "log-driver": "local",
-  "log-opts": {"max-size": "20m", "max-file": "5"}
+  "cgroup-parent": "/docker_limit.slice"
 }
