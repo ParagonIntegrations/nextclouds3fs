@@ -5,5 +5,5 @@ Before=slices.target
 [Slice]
 #Memory Management
 MemoryAccounting=true
-MemoryHigh=800M
-MemoryLimit=900M
+MemoryHigh=600M
+MemoryLimit=700M
