@@ -107,8 +107,8 @@ if [ -n "${mounted}" ]; then
             exit 1
         fi
     fi
-#    exec "$@"
-    exec /entrypoint.sh "apache2-foreground"
+    exec "$@"
+#    exec /entrypoint.sh "apache2-foreground"
 else
     echo "S3 Mount failure exiting in 5 seconds."
     sleep 5
