@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-printf "READY\n";
+echo "Supervisor started"
 
 while read line; do
   echo "Processing Event: $line" >&2;
